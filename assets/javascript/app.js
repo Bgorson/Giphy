@@ -1,7 +1,8 @@
 
 
 var nameQuery;
-var queryURL;
+var staticQueryURL;
+var activeQueryURL;
 
 var topics = ["Lucille", "Buster", "Michael", "Lindsey","Gob","Blue Man", "Tobias"];
 
@@ -12,35 +13,39 @@ for (i=0; i<topics.length;i++){
     buttons.html(topics[i]);
     buttons.attr("name", topics[i]); 
     buttons.appendTo('#topics'); 
-}
+  }
 
 //click event to populate page with static GIFS with Rating
 $(".topics").on("click", function(){
     $("#gifs").html("");
     nameQuery = $(this).attr("name");
-    queryURL= "http://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
-    console.log(queryURL);
+    staticQueryURL= "http://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+    console.log(staticQueryURL);
     console.log(nameQuery)
+   
     
     $.ajax({
-        url: queryURL,
+        url: staticQueryURL,
         method: "GET"
       }).then(function(response) {
-        var requestedGifs = $("#gifs");
         for (var i=0; i < 10; i++) {
-          var img = $("<img>").attr("src", response.data[i].images.fixed_height_still.url)
-          img.attr("number",i)
-          $(requestedGifs).append(img)
+          var img = $("<img>");
+          img.addClass("gifImage")
+          img.attr("src", response.data[i].images.fixed_height_still.url);
+          img.attr("number",i);
+          img.attr("activeURL",response.data[i].images.fixed_height.url);
+          img.attr("isActive",false);
+          $("#gifs").append(img);
         }
 })
 })
 
 
 //Click event to activate GIF and de-activate 
-$("#gifs").on("click",function(){
-    console.log($(this).html())
-})
+$(".gifImage").on("click",function() {
+console.log("clicked")
 
+})
 
 
 
