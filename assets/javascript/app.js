@@ -3,7 +3,7 @@
 var nameQuery;
 var queryURL;
 
-var topics = ["Ryu", "Ken", "Chun-Li", "Blanka"];
+var topics = ["Lucille", "Buster", "Michael", "Lindsey","Gob","Blue Man", "Tobias"];
 
 //Create buttons based on topics
 for (i=0; i<topics.length;i++){
@@ -18,7 +18,7 @@ for (i=0; i<topics.length;i++){
 $(".topics").on("click", function(){
     $("#gifs").html("");
     nameQuery = $(this).attr("name");
-    queryURL= "http://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-video-game-street-fighter&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+    queryURL= "http://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
     console.log(queryURL);
     console.log(nameQuery)
     
@@ -29,6 +29,7 @@ $(".topics").on("click", function(){
         var requestedGifs = $("#gifs");
         for (var i=0; i < 10; i++) {
           var img = $("<img>").attr("src", response.data[i].images.fixed_height_still.url)
+          img.attr("number",i)
           $(requestedGifs).append(img)
         }
 })
@@ -36,7 +37,9 @@ $(".topics").on("click", function(){
 
 
 //Click event to activate GIF and de-activate 
-
+$("#gifs").on("click",function(){
+    console.log($(this).html())
+})
 
 
 
