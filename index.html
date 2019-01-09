@@ -5,20 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Arrested Development Giphy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets\css\reset.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="assets\css\style.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    <div id = "topics">
+    <div class = "title pb-2 mt-4 mb-2 border-bottom">Arrested Development Gifs</div>
+    <div class = "container">
+        <div class = "row">
+        <div class ="col-10">
 
+   
+      
+    <div id = "topics"></div>
+    <div id = "gifs"></div>
+    <div id = "ratings"></div>
     </div>
-    <div id = "gifs">
-
-    </div>
-
-
-
-
+     
+     <div class ="col-2">
+    <form id="character-form">
+            <label for="character-input">Add an Arrested Development Character</label>
+            <input type="text" id="character-input"><br>
+      
+            <!-- Button triggers new character to be added -->
+            <input id="add-character" type="submit" value="Arrested Development">
+          </form>
+        </div>
+        </div>
+        </div>
+        </div>
     <script src="assets\javascript\app.js"></script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+html {
+    box-sizing: border-box;
+}
+.title {
+    font-weight:bold;
+    font-size:30px;
+    text-align: center;
+}
+.topics{
+    margin:1em;
+    }
+.buttons{
+    margin-bottom:1em;
+}
+.gifImage {
+
+
+}
+.rating {
+
+}
+.gifDiv{
+    display: inline-block;
+ }
