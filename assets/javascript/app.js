@@ -24,7 +24,7 @@ function populateGifs(element){
   $("#gifs").html("");
   nameQuery = $(element).attr("name");
   console.log(element)
-  staticQueryURL= "http://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
   $.ajax({
       url: staticQueryURL,
       method: "GET"
