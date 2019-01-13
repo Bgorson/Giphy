@@ -21,10 +21,25 @@ html {
 }
 .gifDiv{
     display: inline-block;
+    position:relative;
  }
  .stickyButtons{
     position: sticky;
     top:4em;
     
+}
+.favButton {
+    position: absolute;
+    top: 85%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    background-image: url(../images/favicon.png);
+    background-repeat: no-repeat;
+    background-color:transparent;
+    height:16px;
+    border: none;
+    cursor: pointer;
+    padding-left:16px;
+     text-align: center;
 
 }

@@ -4,6 +4,8 @@ var staticQueryURL;
 var activeQueryURL;
 var topics = ["Lucille", "Buster", "Michael", "Lindsey","Gob","Blue Man", "Tobias", "George Michael"];
 var more;
+var moreType;
+var favTopics =[];
 
 //Create buttons based on topics
 function createButtons(){
@@ -20,6 +22,8 @@ for (i=0; i<topics.length;i++){
 //click event to populate page with static GIFS with Rating
 $(document).on("click", ".topics", function() {
   more = this;
+  moreType="batch";
+  $("#moreBtn").text("More?")
   populateGifs(this)
   $("#gifs").html("");
 
@@ -28,7 +32,7 @@ $(document).on("click", ".topics", function() {
 function populateGifs(element){
   
   nameQuery = $(element).attr("name");
-  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=random+" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "+arrested+development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
   $.ajax({
       url: staticQueryURL,
       method: "GET"
@@ -37,6 +41,8 @@ function populateGifs(element){
         var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
         var img = $("<img>");
         var ratingText = $("<p>")
+
+            
         img.addClass("gifImage")
         img.attr("src", response.data[i].images.fixed_height_still.url);
         img.attr("activeURL",response.data[i].images.fixed_height.url);
@@ -44,13 +50,28 @@ function populateGifs(element){
         img.attr("gifState", "still");
         var rating = response.data[i].rating.toUpperCase();
         ratingText.html("Rating:" + rating);
+        
         $(gifDiv).append(ratingText)
         $(gifDiv).append(img);
+        placeFavorites(gifDiv,img)
         $("#gifs").append(gifDiv)
+
            
       }
 })
 }
+//places hearts in gifs for favorites
+function placeFavorites(div,imgStats){
+  var favoriteIcon= $("<button>")
+  $(favoriteIcon).addClass("favButton")
+  $(div).append(favoriteIcon)
+  favoriteIcon.attr("URL", imgStats.attr("src"));
+  favoriteIcon.attr("activeURL", imgStats.attr("activeURL"));
+  favoriteIcon.attr("stillURL", imgStats.attr("stillURL"));
+  favoriteIcon.attr("gifState", imgStats.attr("gifState"));
+
+}
+
 
 //Click event to activate GIF and de-activate 
 $(document).on("click", ".gifImage", function() {
@@ -84,16 +105,22 @@ $("#add-character").on("click", function() {
     createButtons();
       }
 })
-
+//What to do when "more" is clicked
 $(".more").on("click", function() {
-populateMoreGifs(more)
+  if (moreType == "batch"){
+    populateMoreGifs(more)
+  }
+  else {
+    populateEvenMoreGifs(more)
+  }
 })
 
-
-function populateMoreGifs(element){
+//Adds a single random gif from the query
+function populateEvenMoreGifs(element){
+  
   console.log(element)
   nameQuery = $(element).attr("name");
-  staticQueryURL= "https://api.giphy.com/v1/gifs/random?api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol&tag=" + nameQuery + "-arrested-development"
+  staticQueryURL= "https://api.giphy.com/v1/gifs/random?api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol&tag=" + nameQuery + "+arrested+development"
   console.log(staticQueryURL)
   $.ajax({
       url: staticQueryURL,
@@ -102,19 +129,80 @@ function populateMoreGifs(element){
       
         var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
         var img = $("<img>");
-        // var ratingText = $("<p>")
         img.addClass("gifImage")
         img.attr("src", response.data.images.fixed_height_still.url);
         img.attr("activeURL",response.data.images.fixed_height.url);
         img.attr("stillURL",response.data.images.fixed_height_still.url);
         img.attr("gifState", "still");
-        // var rating = response.data.rating.toUpperCase();
-        // ratingText.html("Rating:" + rating);
-        // $(gifDiv).append(ratingText)
         $(gifDiv).append(img);
+        placeFavorites(gifDiv,img)
         $("#gifs").append(gifDiv)
+        
+
 })
 }
 
-
+//Adds another set of 10 images from the ajax response
+function populateMoreGifs(element){
+  moreType="random";
+  $("#moreBtn").text("One more?")
+  nameQuery = $(element).attr("name");
+  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "+arrested+development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+  $.ajax({
+      url: staticQueryURL,
+      method: "GET"
+    }).then(function(response) {
+      for (var i=10; i < 25; i++) { //Amount of Gifs to display
+        var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
+        var img = $("<img>");
+        var ratingText = $("<p>")
+        img.addClass("gifImage")
+        img.attr("src", response.data[i].images.fixed_height_still.url);
+        img.attr("activeURL",response.data[i].images.fixed_height.url);
+        img.attr("stillURL",response.data[i].images.fixed_height_still.url);
+        img.attr("gifState", "still");
+        var rating = response.data[i].rating.toUpperCase();
+        ratingText.html("Rating:" + rating);
+        $(gifDiv).append(ratingText)
+        $(gifDiv).append(img);
+        placeFavorites(gifDiv)
+        $("#gifs").append(gifDiv)
+           
+      }
+})
+}
+//Places buttons on the page at start
 createButtons()
+$(document).on("click", ".favButton",function(){
+  var info = {
+  URL: $(this).attr("URL"),
+  activeURL: $(this).attr("activeURL"),
+  stillURL:$(this).attr("stillURL"),
+  gifState:$(this).attr("gifState")
+}
+favTopics.push(info);
+localStorage.setItem("favorites",JSON.stringify(favTopics));
+})
+$("#favPage").on("click",function(){
+  var storedFavorites = (localStorage.getItem("favorites"));
+  console.log(storedFavorites)
+  for (i=0;i<storedFavorites.length;i++){
+    var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
+    var img = $("<img>");
+    // var ratingText = $("<p>")
+    img.addClass("gifImage")
+
+    // img.attr("src", storedFavorites[i].URL.slice(0,-1));
+    // img.attr("activeURL",storedFavorites[i].activeURL.slice(0,-1));
+    // img.attr("stillURL",storedFavorites[i].stillURL.slice(0,-1))
+    // img.attr("gifState", "still");
+        // var rating = response.data[i].rating.toUpperCase();
+        // ratingText.html("Rating:" + rating);
+        
+        // $(gifDiv).append(ratingText)
+        $(gifDiv).append(img);
+        placeFavorites(gifDiv,img)
+        $("#gifs").append(gifDiv)
+  }
+
+})
