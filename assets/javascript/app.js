@@ -3,9 +3,9 @@ var nameQuery;
 var staticQueryURL;
 var activeQueryURL;
 var topics = ["Lucille", "Buster", "Michael", "Lindsey","Gob","Blue Man", "Tobias", "George Michael"];
+var more;
 
-
-//Create buttons based on pre-established topics
+//Create buttons based on topics
 function createButtons(){
   $('#topics').html('')
 for (i=0; i<topics.length;i++){
@@ -19,13 +19,16 @@ for (i=0; i<topics.length;i++){
 
 //click event to populate page with static GIFS with Rating
 $(document).on("click", ".topics", function() {
-   populateGifs(this)
+  more = this;
+  populateGifs(this)
+  $("#gifs").html("");
+
 })
 //AJAX function call to create gif elements and clear current page
 function populateGifs(element){
-  $("#gifs").html("");
+  
   nameQuery = $(element).attr("name");
-  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=random+" + nameQuery + "-arrested-development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
   $.ajax({
       url: staticQueryURL,
       method: "GET"
@@ -81,5 +84,37 @@ $("#add-character").on("click", function() {
     createButtons();
       }
 })
+
+$(".more").on("click", function() {
+populateMoreGifs(more)
+})
+
+
+function populateMoreGifs(element){
+  console.log(element)
+  nameQuery = $(element).attr("name");
+  staticQueryURL= "https://api.giphy.com/v1/gifs/random?api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol&tag=" + nameQuery + "-arrested-development"
+  console.log(staticQueryURL)
+  $.ajax({
+      url: staticQueryURL,
+      method: "GET"
+    }).then(function(response) {
+      
+        var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
+        var img = $("<img>");
+        // var ratingText = $("<p>")
+        img.addClass("gifImage")
+        img.attr("src", response.data.images.fixed_height_still.url);
+        img.attr("activeURL",response.data.images.fixed_height.url);
+        img.attr("stillURL",response.data.images.fixed_height_still.url);
+        img.attr("gifState", "still");
+        // var rating = response.data.rating.toUpperCase();
+        // ratingText.html("Rating:" + rating);
+        // $(gifDiv).append(ratingText)
+        $(gifDiv).append(img);
+        $("#gifs").append(gifDiv)
+})
+}
+
 
 createButtons()

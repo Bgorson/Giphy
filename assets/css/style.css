@@ -22,3 +22,9 @@ html {
 .gifDiv{
     display: inline-block;
  }
+ .stickyButtons{
+    position: sticky;
+    top:4em;
+    
+
+}
