@@ -106,7 +106,7 @@ $("#add-character").on("click", function() {
       }
 })
 //What to do when "more" is clicked
-$(".more").on("click", function() {
+$("#moreBtn").on("click", function() {
   if (moreType == "batch"){
     populateMoreGifs(more)
   }
@@ -165,7 +165,7 @@ function populateMoreGifs(element){
         ratingText.html("Rating:" + rating);
         $(gifDiv).append(ratingText)
         $(gifDiv).append(img);
-        placeFavorites(gifDiv)
+        placeFavorites(gifDiv,img)
         $("#gifs").append(gifDiv)
            
       }
@@ -173,6 +173,7 @@ function populateMoreGifs(element){
 }
 //Places buttons on the page at start
 createButtons()
+//When a favorite is clicked
 $(document).on("click", ".favButton",function(){
   var info = {
   URL: $(this).attr("URL"),
@@ -183,19 +184,22 @@ $(document).on("click", ".favButton",function(){
 favTopics.push(info);
 localStorage.setItem("favorites",JSON.stringify(favTopics));
 })
+
+//When pulling up the favorites page
 $("#favPage").on("click",function(){
+  $("#gifs").html("");
   var storedFavorites = (localStorage.getItem("favorites"));
-  console.log(storedFavorites)
+  storedFavorites=(JSON.parse(storedFavorites))
+  console.log(storedFavorites[0])
   for (i=0;i<storedFavorites.length;i++){
     var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
     var img = $("<img>");
     // var ratingText = $("<p>")
     img.addClass("gifImage")
-
-    // img.attr("src", storedFavorites[i].URL.slice(0,-1));
-    // img.attr("activeURL",storedFavorites[i].activeURL.slice(0,-1));
-    // img.attr("stillURL",storedFavorites[i].stillURL.slice(0,-1))
-    // img.attr("gifState", "still");
+    img.attr("src", storedFavorites[i].URL);
+    img.attr("activeURL",storedFavorites[i].activeURL);
+    img.attr("stillURL",storedFavorites[i].stillURL)
+    img.attr("gifState", "still");
         // var rating = response.data[i].rating.toUpperCase();
         // ratingText.html("Rating:" + rating);
         
