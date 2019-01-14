@@ -5,7 +5,13 @@ var activeQueryURL;
 var topics = ["Lucille", "Buster", "Michael", "Lindsey","Gob","Blue Man", "Tobias", "George Michael"];
 var more;
 var moreType;
-var favTopics =[];
+
+//Retrieves favorite items if available
+var favTopics = (localStorage.getItem("favorites"));
+favTopics=(JSON.parse(favTopics))
+if (favTopics == undefined){
+  favTopics = [];
+}
 
 //Create buttons based on topics
 function createButtons(){
