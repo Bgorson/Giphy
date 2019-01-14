@@ -27,6 +27,7 @@ for (i=0; i<topics.length;i++){
 
 //click event to populate page with static GIFS with Rating
 $(document).on("click", ".topics", function() {
+  $("#moreBtn").css("display","inline-block")
   more = this;
   moreType="batch";
   $("#moreBtn").text("More?")
@@ -181,6 +182,7 @@ function populateMoreGifs(element){
 createButtons()
 //When a favorite is clicked
 $(document).on("click", ".favButton",function(){
+  
   var info = {
   URL: $(this).attr("URL"),
   activeURL: $(this).attr("activeURL"),
@@ -193,6 +195,7 @@ localStorage.setItem("favorites",JSON.stringify(favTopics));
 
 //When pulling up the favorites page
 $("#favPage").on("click",function(){
+  $("#moreBtn").css("display","none")
   $("#gifs").html("");
   var storedFavorites = (localStorage.getItem("favorites"));
   storedFavorites=(JSON.parse(storedFavorites))
