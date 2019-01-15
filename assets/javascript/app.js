@@ -119,36 +119,36 @@ $("#moreBtn").on("click", function() {
 
 })
 //What to do when 'weird' is clicked
-$("#weird").on("click", function(){
-  weirdBtn(more)
-})
+// $("#weird").on("click", function(){
+//   weirdBtn(more)
+// })
 
 //Adds a single random gif from the query
-function weirdBtn(element){
+// function weirdBtn(element){
   
-  console.log(element)
-  nameQuery = $(element).attr("name");
-  staticQueryURL= "https://api.giphy.com/v1/gifs/random?api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol&tag=" + nameQuery + "+arrested+development"
-  console.log(staticQueryURL)
-  $.ajax({
-      url: staticQueryURL,
-      method: "GET"
-    }).then(function(response) {
+//   console.log(element)
+//   nameQuery = $(element).attr("name");
+//   staticQueryURL= "https://api.giphy.com/v1/gifs/random?api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol&tag=" + nameQuery + "+arrested+development"
+//   console.log(staticQueryURL)
+//   $.ajax({
+//       url: staticQueryURL,
+//       method: "GET"
+//     }).then(function(response) {
       
-        var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
-        var img = $("<img>");
-        img.addClass("gifImage")
-        img.attr("src", response.data.images.fixed_height_still.url);
-        img.attr("activeURL",response.data.images.fixed_height.url);
-        img.attr("stillURL",response.data.images.fixed_height_still.url);
-        img.attr("gifState", "still");
-        $(gifDiv).append(img);
-        placeFavorites(gifDiv,img)
-        $("#gifs").append(gifDiv)
+//         var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
+//         var img = $("<img>");
+//         img.addClass("gifImage")
+//         img.attr("src", response.data.images.fixed_height_still.url);
+//         img.attr("activeURL",response.data.images.fixed_height.url);
+//         img.attr("stillURL",response.data.images.fixed_height_still.url);
+//         img.attr("gifState", "still");
+//         $(gifDiv).append(img);
+//         placeFavorites(gifDiv,img)
+//         $("#gifs").append(gifDiv)
         
 
-})
-}
+// })
+// }
 
 //Adds another set of 10 images from the ajax response
 function populateMoreGifs(element){
