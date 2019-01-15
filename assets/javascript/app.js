@@ -4,7 +4,7 @@ var staticQueryURL;
 var activeQueryURL;
 var topics = ["Lucille", "Buster", "Michael", "Lindsey","Gob","Blue Man", "Tobias", "George Michael"];
 var more;
-var moreType;
+var offset= 10;
 
 //Retrieves favorite items if available
 var favTopics = (localStorage.getItem("favorites"));
@@ -29,17 +29,18 @@ for (i=0; i<topics.length;i++){
 $(document).on("click", ".topics", function() {
   $("#moreBtn").css("display","inline-block")
   more = this;
-  moreType="batch";
   $("#moreBtn").text("More?")
   populateGifs(this)
   $("#gifs").html("");
+  offset= 10;
+
 
 })
 //AJAX function call to create gif elements and clear current page
 function populateGifs(element){
   
   nameQuery = $(element).attr("name");
-  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "+arrested+development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
+  staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "+arrested+development&offset=" + offset + "&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
   $.ajax({
       url: staticQueryURL,
       method: "GET"
@@ -48,7 +49,7 @@ function populateGifs(element){
         var gifDiv= $("<div class = 'gifDiv mx-2 my-1'>");
         var img = $("<img>");
         var ratingText = $("<p>")
-
+        offset+=10;
             
         img.addClass("gifImage")
         img.attr("src", response.data[i].images.fixed_height_still.url);
@@ -114,16 +115,16 @@ $("#add-character").on("click", function() {
 })
 //What to do when "more" is clicked
 $("#moreBtn").on("click", function() {
-  if (moreType == "batch"){
-    populateMoreGifs(more)
-  }
-  else {
-    populateEvenMoreGifs(more)
-  }
+  populateGifs(more)
+
+})
+//What to do when 'weird' is clicked
+$("#weird").on("click", function(){
+  weirdBtn(more)
 })
 
 //Adds a single random gif from the query
-function populateEvenMoreGifs(element){
+function weirdBtn(element){
   
   console.log(element)
   nameQuery = $(element).attr("name");
@@ -151,8 +152,6 @@ function populateEvenMoreGifs(element){
 
 //Adds another set of 10 images from the ajax response
 function populateMoreGifs(element){
-  moreType="random";
-  $("#moreBtn").text("One more?")
   nameQuery = $(element).attr("name");
   staticQueryURL= "https://api.giphy.com/v1/gifs/search?q=" + nameQuery + "+arrested+development&api_key=AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol"
   $.ajax({
