@@ -7,3 +7,5 @@ Each GIF has a heart icon that when clicked, allows a user to keep a list of fav
 can be displayed by clicking the "Favorites" button at any time. 
 
 Navigation buttons stay on screen to allow users to enter inputs without scrolling up the page. 
+
+https://bgorson.github.io/Giphy/
