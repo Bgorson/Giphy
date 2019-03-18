@@ -12,9 +12,11 @@
 </head>
 <body>
     <div class = "title pb-2 mt-4 mb-2 border-bottom">Arrested Development Gifs</div>
+    <h1 class = "smallTitle jumbotron">Select Arrested Development Characters that you want to see in Gif form! Click the image to animate or the heart to save to your favorites</h1>
+    
     <div class = "container">
         <div class = "row">
-        <div class ="col-10">
+        <div class ="main col-10">
 
    
       
@@ -23,8 +25,8 @@
     <div id = "ratings"></div>
     </div>
      
-     <div class ="col-2">
-         <div class= "stickyButtons">
+     <div class ="sidebar col-2">
+    <div class= "stickyButtons">
     <form id="character-form">
             <label for="character-input">Add an Arrested Development Character</label>
             <input type="text" id="character-input"><br>
@@ -44,16 +46,3 @@
     <script src="assets\javascript\app.js"></script>
 </body>
 </html>
-
-
-
-<!----API KEY AX02ZMKDt1EVKnwZGVJUoOEhJQxOW6ol
-    To do:::
-    Add meta data to Gifs in readable format
-    Create a favorites section
-    Append button to gifs with favorite icon
-    click event that stores the gif info in local storage
-    retrieves it when clicking 'favorites'
-Update break point with a variable
-that changes at the end of the first loop
-Search with limits and offsets-->
