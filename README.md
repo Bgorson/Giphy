@@ -8,4 +8,6 @@ can be displayed by clicking the "Favorites" button at any time.
 
 Navigation buttons stay on screen to allow users to enter inputs without scrolling up the page. 
 
+Page is built using bootstrap, javascript and jquery. 
+
 https://bgorson.github.io/Giphy/
